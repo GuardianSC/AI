@@ -6,11 +6,17 @@
 #include <iostream>
 #include <set>
 
+struct Vector2
+{
+	float x, y;
+	Vector2() {}
+	Vector2(float x, float y) : x(x), y(y) {}
+};
 
 class Graph
 {
 public:
-	// predefine classes
+	// predefine classes                        dos = Degree of Separation
 	struct Node;
 	struct Edge
 	{
@@ -52,29 +58,49 @@ private:
 
 inline void printDFS(Graph::Node *startNode)
 {
-	std::stack<Graph::Node *> frontier; // open
+	std::list<Graph::Node *> frontier; // open
 	std::set <Graph::Node *> explored; // closed
 
-	//Instructions: Put starting node on stack while it isn't empty, print the top node's value, pop node from frontier, push node to explored, for each neighbor, if neighbor hasn't been explored, push neighbor to frontier
-
-	frontier.push(startNode); // Put node on stack
+	frontier.push_front(startNode); // Put node on list (frontier)
+	explored.insert(startNode);
 	while (!frontier.empty()) // While stack is not empty
 	{
-		auto current = frontier.top(); // set current variable to top of the stack (startNode in this case)
-		std::cout << current->value << " "; // Print top node value
-		frontier.pop(); // pop startNode from the stack
+		auto current = frontier.front(); // set current variable to top of the stack (startNode in this case)
+		std::cout << (char)current->value << " "; // Print top node value
+		frontier.pop_front(); // pop startNode from the stack
 		explored.insert(current); // push startNode to set
 
-		for each(auto e in current->connections) //for each neighbor, push neighbor to frontier
+		for each(Graph::Edge e in current->connections) //for each neighbor, push neighbor to frontier
 		{
-			if (explored.count(e.connection)) // if neighbor hasn't been explored
+			if (!explored.count(e.connection) ) // if neighbor hasn't been explored
 			{
-				frontier.push(e.connection);
+				frontier.push_front(e.connection); // push neighbor to frontier
+				explored.insert(e.connection);
 			}
 		}
 	}
-	
-	
-	
-	
+}
+
+inline void printBFS(Graph::Node *startNode)
+{
+	std::queue<Graph::Node *> frontier; // open
+	std::set <Graph::Node *> explored; // closed
+
+	frontier.push(startNode); // 
+	explored.insert(startNode);
+	while (!frontier.empty()) // 
+	{
+		auto current = frontier.front(); // 
+		std::cout << (char)current->value << " "; // 
+		frontier.pop(); // 
+
+		for each(Graph::Edge e in current->connections) //
+		{
+			if (!explored.count(e.connection)) // 
+			{
+				frontier.push(e.connection); // 
+				explored.insert(e.connection);
+			}
+		}
+	}
 }
