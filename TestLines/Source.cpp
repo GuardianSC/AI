@@ -22,7 +22,11 @@ int main(int argc, char **argv)
 	std::cout << std::endl;
 	printBFS(a); // Executes Breadth First Search function in Graph.h
 	std::cout << std::endl;
-	system("pause");
+	PrintByComparison(a, CompareDFS);
+	std::cout << std::endl;
+	PrintByComparison(a, CompareBFS);
+	std::cout << std::endl;
 	delete pGraph; // Deletes graph
+	system("pause");
 	return 0;
 };
